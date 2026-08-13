@@ -39,7 +39,7 @@ The rollup config does more than bundle; several custom inline plugins matter:
 
 `.github/workflows/release.yml` runs on every push to `main`/`master`: it reads `version` from `package.json`, builds, and publishes a GitHub release tagged `v<version>` with `dist/*.tar.gz` attached. **Bumping `package.json` version is what cuts a release** — a push without a bump will collide with the existing tag. `package.json` version is also the plugin version surfaced to Budibase (via `index.js` and the `hash()` step), so it is the single source of truth.
 
-GitHub disables Actions on forks by default, so on `avivkri/budibase-interval-plugin` this workflow does not run; build release artifacts locally instead.
+Actions were disabled on this fork (GitHub's default for forks that contained workflows) until 2026-08-13; they are now enabled, and the workflow also accepts `workflow_dispatch` for manual runs. The job declares `permissions: contents: write` because the repository's default `GITHUB_TOKEN` scope is read-only, which would otherwise 403 on the release step.
 
 ## Architecture
 
