@@ -9,6 +9,10 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    # This fork's default GITHUB_TOKEN scope is read-only; the release step
+    # needs write access to create the tag and upload the tarball.
+    permissions:
+      contents: write
     steps:
       - uses: actions/checkout@v3
       - uses: actions/setup-node@v1
