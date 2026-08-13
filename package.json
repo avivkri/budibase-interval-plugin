@@ -1,6 +1,6 @@
 {
   "name": "Interval",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "description": "Set time interval to trigger actions.",
   "license": "MIT",
   "svelte": "index.js",
@@ -11,7 +11,7 @@
     "watch": "rollup -cw rollup.config.mjs"
   },
   "dependencies": {
-    "svelte": "^5.0.0"
+    "svelte": "5.40.2"
   },
   "devDependencies": {
     "@budibase/backend-core": "^2.8.0",
@@ -29,6 +29,6 @@
     "tar": "^6.1.11"
   },
   "peerDependencies": {
-    "svelte": "^5.0.0"
+    "svelte": "5.40.2"
   }
 }
