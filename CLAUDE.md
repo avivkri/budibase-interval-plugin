@@ -37,7 +37,9 @@ The rollup config does more than bundle; several custom inline plugins matter:
 
 ## Release
 
-`.github/workflows/release.yml` runs on every push to `main`/`master`: it reads `version` from `package.json`, builds, and publishes a GitHub release tagged `v<version>` with `dist/*.tar.gz` attached. **Bumping `package.json` version is what cuts a release** — a push without a bump will collide with the existing tag. `package.json` version is also the plugin version surfaced to Budibase (via `index.js` and the `hash()` step), so it is the single source of truth.
+`.github/workflows/release.yml` runs on every push to `main`/`master`: it reads `version` from `package.json`, builds, and publishes a GitHub release tagged `v<version>` with `dist/*.tar.gz` attached. **Bumping `package.json` version is what cuts a new release** — pushing without a bump does not fail, it silently re-uploads the artifact to the existing `v<version>` release, so an unrelated commit can quietly replace a published tarball. `package.json` version is also the plugin version surfaced to Budibase (via `index.js` and the `hash()` step), so it is the single source of truth.
+
+The build is reproducible: CI (yarn, Node 18) and a local `npm run build` produce a byte-identical `plugin.min.js`. The `.tar.gz` wrapper differs by a couple of bytes between runs (gzip metadata); compare the inner bundle's sha1, which is also what `hash()` writes into `dist/schema.json`.
 
 Actions were disabled on this fork (GitHub's default for forks that contained workflows) until 2026-08-13; they are now enabled, and the workflow also accepts `workflow_dispatch` for manual runs. The job declares `permissions: contents: write` because the repository's default `GITHUB_TOKEN` scope is read-only, which would otherwise 403 on the release step.
 
